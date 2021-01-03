@@ -1,0 +1,21 @@
+- name: update cache
+  apt: update_cache="yes"
+  tags: update_cache
+
+  - name: Install a list of packages
+    apt:
+      pkg:
+        - build-essential
+    tags: install
+
+- name: Download Go
+  get_url:
+    url: https://golang.org/dl/go{{go_version}}.linux-amd64.tar.gz
+    dest: /tmp/go{{go_version}}.linux-amd64.tar.gz
+    mode: '0640'
+  tags: install
+
+- name: Extract foo.tgz into /var/lib/foo
+  unarchive:
+    src: /tmp/go{{go_version}}.linux-amd64.tar.gz
+    dest: /usr/local
